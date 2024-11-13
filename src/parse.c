@@ -6,7 +6,7 @@
 /*   By: victor <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 10:18:35 by victor            #+#    #+#             */
-/*   Updated: 2024/11/12 13:22:56 by victor           ###   ########.fr       */
+/*   Updated: 2024/11/13 22:52:37 by victor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,39 +14,48 @@
 
 char	*exp_env_vars(char *input, int exit_status)
 {
-	char	*expanded = malloc(strlen(input) + 1);
-	char	*ptr = input;
+	char	*expanded;
+	char	*ptr;
 	char	*env_var;
-	int		i = 0;
+	int		i;
 
-	while (*ptr) {
-		if (*ptr == '$') {
+	expanded = malloc(strlen(input) + 1);
+	ptr = input;
+	i = 0;
+	while (*ptr)
+	{
+		if (*ptr == '$')
+		{
 			ptr++;
-			if (*ptr == '?') {
+			if (*ptr == '?')
+			{
 				sprintf(expanded + i, "%d", exit_status);
 				i = strlen(expanded);
 				ptr++;
-			} else {
+			}
+			else
+			{
 				env_var = getenv(ptr);
-				if (env_var) {
+				if (env_var)
+				{
 					sprintf(expanded + i, "%s", env_var);
 					i = strlen(expanded);
-					while (*ptr && *ptr != ' ' && *ptr != '$') {
+					while (*ptr && *ptr != ' ' && *ptr != '$')
 						ptr++;
-					}
-				} else {
-					ptr++;
 				}
+				else
+					ptr++;
 			}
-		} else {
-			expanded[i++] = *ptr++;
 		}
+		else
+			expanded[i++] = *ptr++;
 	}
 	expanded[i] = '\0';
-	return expanded;
+	return (expanded);
 }
 
-int	ft_is_builtin(char *cmd) {
+int	ft_is_builtin(char *cmd)
+{
 	if (strcmp(cmd, "echo") == 0 || strcmp(cmd, "cd") == 0 ||
 			strcmp(cmd, "pwd1") == 0 || strcmp(cmd, "export") == 0 ||
 			strcmp(cmd, "unset") == 0 || strcmp(cmd, "env") == 0 ||
@@ -54,16 +63,6 @@ int	ft_is_builtin(char *cmd) {
 		return 1;
 	}
 	return 0;
-}
-
-void	ft_putstr_fd2(char *str, char *arg)
-{
-	while (*str)
-		write(2, str++, 1);
-	if (arg)
-		while (*arg)
-			write(2, arg++, 1);
-	write(2, "\n", 1);
 }
 
 void ft_command(char *cmd, int *exit_status)
@@ -100,7 +99,7 @@ void ft_command(char *cmd, int *exit_status)
 	}
 }
 
-void	ft_execute_builtin(char *cmd, int *exit_status)
+void	ft_execute(char *cmd, int *exit_status)
 {
 	if (strcmp(cmd, "cd") == 0)
 	{
