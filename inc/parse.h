@@ -6,7 +6,7 @@
 /*   By: victor <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 10:14:01 by victor            #+#    #+#             */
-/*   Updated: 2024/11/13 22:55:24 by victor           ###   ########.fr       */
+/*   Updated: 2024/11/14 11:22:57 by victor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PARSE_H
@@ -44,6 +44,7 @@
 # include <termios.h>
 /* tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs */
 # include <term.h>
+# include "../libft/libft.h"
 
 void	ft_command(char *cmd, int *exit_status);
 char	*exp_env_vars(char *input, int exit_status);
