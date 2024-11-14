@@ -6,7 +6,7 @@
 /*   By: victor <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 10:14:01 by victor            #+#    #+#             */
-/*   Updated: 2024/11/12 13:07:06 by victor           ###   ########.fr       */
+/*   Updated: 2024/11/13 22:55:24 by victor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PARSE_H
@@ -47,9 +47,7 @@
 
 void	ft_command(char *cmd, int *exit_status);
 char	*exp_env_vars(char *input, int exit_status);
-void	ft_putstr_fd2(char *str, char *arg);
-void	ft_execute(char *argv[], int i, int tmp_fd, char *env[]);
 int		ft_is_builtin(char *cmd);
-void	ft_execute_builtin(char *cmd, int *exit_status);
+void	ft_execute(char *cmd, int *exit_status);
 
 #endif
