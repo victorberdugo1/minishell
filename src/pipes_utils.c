@@ -6,7 +6,7 @@
 /*   By: victor <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 13:56:07 by victor            #+#    #+#             */
-/*   Updated: 2024/11/27 13:57:39 by victor           ###   ########.fr       */
+/*   Updated: 2024/11/27 18:33:26 by victor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,11 @@ void	close_pipe(int pipefd)
 	}
 }
 
-void	wait_for_children(void)
+void	exec_command(char **args)
 {
-	while (wait(NULL) > 0)
-		;
+	if (execvp(args[0], args) == -1)
+	{
+		perror("execvp");
+		exit(EXIT_FAILURE);
+	}
 }
