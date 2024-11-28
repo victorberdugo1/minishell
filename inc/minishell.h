@@ -6,7 +6,7 @@
 /*   By: victor <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 10:14:01 by victor            #+#    #+#             */
-/*   Updated: 2024/11/27 19:47:11 by victor           ###   ########.fr       */
+/*   Updated: 2024/11/28 14:03:49 by vberdugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINISHELL_H
@@ -65,10 +65,10 @@ void	ft_execute_pwd(int *exit_status);
 int		count_pipes(char *str);
 void	handle_pipe_error(void);
 void	handle_fork_error(void);
+void	execute_and_handle_error(char **args);
 void	close_pipe(int pipefd);
 void	execute_pipeline(char *cmd, int *exit_status);
 void	handle_child(char *sub_t, int prev_fd, int pipefds[2], int *exit_s);
 void	handle_pipe_redirection(int prev_pipefd, int pipefds[2]);
-void	exec_command(char **args);
 
 #endif

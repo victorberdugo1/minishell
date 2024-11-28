@@ -6,12 +6,16 @@
 /*   By: victor <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 19:39:05 by victor            #+#    #+#             */
-/*   Updated: 2024/11/27 19:43:27 by victor           ###   ########.fr       */
+/*   Updated: 2024/11/28 13:48:01 by vberdugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/* ************************************************************************** */
+/* Searches for the value of an environment variable in the env array.        */
+/* Returns a pointer to the value if found, or NULL if not found.             */
+/* ************************************************************************** */
 char	*find_env_var(char *name, char *env[])
 {
 	int	i;
@@ -28,6 +32,11 @@ char	*find_env_var(char *name, char *env[])
 	return (NULL);
 }
 
+/* ************************************************************************** */
+/* Constructs the shell prompt using the USER and HOSTNAME environment        */
+/* variables. If these are not set, default values are used. The current      */
+/* working directory is appended to complete the prompt.                      */
+/* ************************************************************************** */
 void	construct_prompt(char *prompt, char *env[])
 {
 	char	*username;
@@ -54,6 +63,10 @@ void	construct_prompt(char *prompt, char *env[])
 	ft_strcat(prompt, "$ ");
 }
 
+/* ************************************************************************** */
+/* Checks if the --version flag is passed as an argument. If present,         */
+/* prints the version information and returns 0. Otherwise, returns 1.        */
+/* ************************************************************************** */
 int	print_version(int argc, char *argv[])
 {
 	if (argc > 1 && ft_strcmp(argv[1], "--version") == 0)
@@ -64,12 +77,20 @@ int	print_version(int argc, char *argv[])
 	return (1);
 }
 
+/* ************************************************************************** */
+/* Generates a dynamic shell prompt and waits for user input. Returns the     */
+/* input string from the user.                                                */
+/* ************************************************************************** */
 char	*handle_prompt(char *prompt, char *env[])
 {
 	construct_prompt(prompt, env);
 	return (readline(prompt));
 }
 
+/* ************************************************************************** */
+/* Processes the input command by expanding environment variables, splitting  */
+/* it into tokens by semicolons, and executing each pipeline of commands.     */
+/* ************************************************************************** */
 void	process_command(char *line, int *exit_status)
 {
 	char	*expanded_line;
