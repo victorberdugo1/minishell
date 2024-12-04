@@ -6,7 +6,7 @@
 #    By: victor <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/12 10:39:30 by victor            #+#    #+#              #
-#    Updated: 2024/12/04 12:15:34 by vberdugo         ###   ########.fr        #
+#    Updated: 2024/12/04 15:44:12 by vberdugo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ INCLUDE = inc/minishell.h libft/libft.h
 
 # Compiler settings
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -I inc
+CFLAGS = -Wall -Wextra -Werror -I inc #-fsanitize=address -fsanitize=undefined -fsanitize=leak -g
 
 # Linker flags (add any required libraries here)
 LDFLAGS = -lcurses -ltermcap -lreadline -lhistory -lncurses

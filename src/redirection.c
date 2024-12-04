@@ -6,7 +6,7 @@
 /*   By: vberdugo <vberdugo@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:07:58 by vberdugo          #+#    #+#             */
-/*   Updated: 2024/12/04 14:28:31 by vberdugo         ###   ########.fr       */
+/*   Updated: 2024/12/04 15:35:34 by vberdugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,19 @@ void	strip_quotes(char *str)
 	len = ft_strlen(str);
 	if ((str[0] == '\'' || str[0] == '"') && str[len - 1] == str[0])
 	{
-		memmove(str, str + 1, len - 2);
+		ft_memmove(str, str + 1, len - 2);
 		str[len - 2] = '\0';
 	}
 }
 
 void	handle_redirections(char **args, int *exit_status)
 {
-	int	fd;
-	int	i;
-	int	append;
+	int		fd;
+	int		i;
+	int		append;
+	char	*delimiter;
+	int		pipefds[2];
+	char	*line;
 
 	i = 0;
 	while (args[i])
@@ -64,8 +67,7 @@ void	handle_redirections(char **args, int *exit_status)
 		}
 		else if (ft_strcmp(args[i], "<<") == 0)
 		{
-			char *delimiter = args[i + 1];
-			int pipefds[2];
+			delimiter = args[i + 1];
 			if (pipe(pipefds) == -1)
 			{
 				perror("pipe");
@@ -75,7 +77,6 @@ void	handle_redirections(char **args, int *exit_status)
 			if (fork() == 0)
 			{
 				close(pipefds[0]);
-				char *line;
 				while ((line = readline("> ")) != NULL)
 				{
 					if (ft_strcmp(line, delimiter) == 0)
