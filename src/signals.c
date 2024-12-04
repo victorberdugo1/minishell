@@ -6,7 +6,7 @@
 /*   By: vberdugo <vberdugo@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:31:38 by vberdugo          #+#    #+#             */
-/*   Updated: 2024/12/03 15:02:20 by vberdugo         ###   ########.fr       */
+/*   Updated: 2024/12/04 12:02:48 by vberdugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	signal_handler(int sig)
 	else if (sig == SIGQUIT)
 	{
 		rl_on_new_line();
-		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 }
