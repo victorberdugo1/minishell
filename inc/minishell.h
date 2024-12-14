@@ -6,7 +6,7 @@
 /*   By: victor <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 10:14:01 by victor            #+#    #+#             */
-/*   Updated: 2024/12/12 20:57:12 by victor           ###   ########.fr       */
+/*   Updated: 2024/12/15 00:34:50 by victor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINISHELL_H
@@ -103,7 +103,7 @@ int		initialize_shell(int argc, char *argv[]);
 int		handle_exit(char *line, int exit_status);
 void	process_line(char *line, int *exit_status);
 /* redirection */
-char	*remove_quotes(const char *str);
+char	*remove_quotes(char *str);
 void	handle_redirections(char **args, int *exit_status);
 int		handle_arguments(char **args, int exit_status);
 int		handle_input_redirect(char **args, int exit_status, int *i);

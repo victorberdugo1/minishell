@@ -6,12 +6,12 @@
 /*   By: vberdugo <vberdugo@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:07:58 by vberdugo          #+#    #+#             */
-/*   Updated: 2024/12/12 15:45:01 by victor           ###   ########.fr       */
+/*   Updated: 2024/12/15 00:37:30 by victor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+/*
 char	*remove_quotes(const char *str)
 {
 	size_t	len;
@@ -37,6 +37,89 @@ char	*remove_quotes(const char *str)
 		result[i++] = str[start++];
 	result[i] = '\0';
 	return (result);
+}*/
+#include <stdbool.h>
+
+#define D_QUOTE '"'
+#define S_QUOTE '\''
+
+bool is_valid_char(char c)
+{
+	return (isalnum(c) || c == '_' || c == '?' || c == '$');
+}
+
+void swap_word(char *word, char **s, char *init, int i)
+{
+	int k;
+	char tmp[900];
+	if (!strcmp("$", word) && init[1]) {
+		word++;
+	}
+	while ((*s)[++i] != *init)
+		tmp[i] = (*s)[i];
+	k = -1;
+	while (word && word[++k])
+	{
+		if (word[k] == ' ')
+			tmp[i++] = '^';
+		else
+			tmp[i++] = word[k];
+	}
+	init++;
+	while (*init && is_valid_char(*init))
+		init++;
+	while (*init)
+		tmp[i++] = *init++;
+	tmp[i] = '\0';
+	free(*s);
+	*s = strdup(tmp);
+}
+
+void remove_q(char **s)
+{
+	int i = 0, j = 0;
+	bool in_single_quote = false, in_double_quote = false;
+	char tmp[900];
+
+	while ((*s)[i]) {
+		if ((*s)[i] == S_QUOTE && !in_double_quote) {
+			in_single_quote = !in_single_quote;
+		} else if ((*s)[i] == D_QUOTE && !in_single_quote) {
+			in_double_quote = !in_double_quote;
+		} else {
+			tmp[j++] = (*s)[i];
+		}
+		i++;
+	}
+	tmp[j] = '\0';
+	free(*s);
+	*s = strdup(tmp);
+}
+
+void handle_q(char **s)
+{
+	int i = 0;
+	char *word = NULL;
+	while ((*s)[i]) {
+		if ((*s)[i] == S_QUOTE || (*s)[i] == D_QUOTE) {
+			if (word != NULL) {
+				swap_word(word, s, (*s) + i, -1);
+				free(word);
+				word = NULL;
+			}
+		}
+		i++;
+	}
+}
+
+void process_string(char **s) {
+	handle_q(s);
+	remove_q(s);
+}
+
+char *remove_quotes(char *str) {
+	process_string(&str);
+	return str;
 }
 
 /* ************************************************************************** */
