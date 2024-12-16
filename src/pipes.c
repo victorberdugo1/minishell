@@ -6,7 +6,7 @@
 /*   By: vberdugo <vberdugo@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:38:32 by vberdugo          #+#    #+#             */
-/*   Updated: 2024/12/15 10:46:44 by victor           ###   ########.fr       */
+/*   Updated: 2024/12/16 13:48:58 by vberdugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ void	handle_pipeline(char *cmd, int *exit_status, t_pipe *pip)
 {
 	pid_t	pid;
 
+	if (validate_syntax(cmd, exit_status))
+		return ;
 	pip->in_q = 0;
 	pip->q_char = '\0';
 	pip->sub_token = ft_strsep(&cmd, "|", &pip->in_q, &pip->q_char);
