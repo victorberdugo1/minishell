@@ -6,7 +6,7 @@
 /*   By: vberdugo <vberdugo@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:38:32 by vberdugo          #+#    #+#             */
-/*   Updated: 2024/12/16 13:48:58 by vberdugo         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:41:13 by vberdugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ void	handle_child(char *sub_t, t_pipe *pipe_d, int *exit_s)
 	int		i;
 
 	args = split_args(sub_t);
+	if (!args[0])
+		exit(*exit_s);
 	i = -1;
 	while (args[++i])
 		process_string(&args[i]);
