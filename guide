@@ -1,9 +1,3 @@
-$| ls
-bash: syntax error near unexpected token `|'
-$||
-bash: syntax error near unexpected token `||'
-
-
 main
 └─> print_version
 └─> initialize_shell
@@ -59,3 +53,22 @@ cat "\"weird_file\""  # Esperado: hola
 /bin/echo "contenido especial" > "file with spaces.txt"
 ls  # Esperado: file with spaces.txt
 cat "file with spaces.txt"  # Esperado: contenido especial
+
+# no ejecuta
+/bin/echo -n hola 
+
+/bin/echo -nnnnnn hola
+
+/bin/echo -n -nn -nnn hola
+
+/bin/echo -n -na hola
+-na hola%
+
+/bin/echo \"\'\'\'\"
+incorrecto \\'\'\'\
+correcto "'''"
+
+/bin/echo \"'''\"
+>
+
+

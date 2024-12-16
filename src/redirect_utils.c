@@ -6,7 +6,7 @@
 /*   By: victor <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 11:28:43 by victor            #+#    #+#             */
-/*   Updated: 2024/12/16 13:53:54 by vberdugo         ###   ########.fr       */
+/*   Updated: 2024/12/16 15:52:43 by vberdugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,20 +105,15 @@ int	handle_input_redirect(char **args, int exit_status, int *i)
 /* ************************************************************************** */
 int	handle_output_redirect(char **args, int exit_status, int *i)
 {
-	//char	*clean_filename;
 	int		fd_out;
 	int		flags;
 
 	process_string(args);
-	//args[*i - 1] = remove_quotes(args[*i - 1]);
-	//if (!args[*i + 1])
-	//	return (1);
 	if (strcmp(args[*i], ">>") == 0)
 		flags = O_WRONLY | O_CREAT | O_APPEND;
 	else
 		flags = O_WRONLY | O_CREAT | O_TRUNC;
 	fd_out = open(args[*i + 1], flags, 0644);
-	//free(clean_filename);
 	if (fd_out == -1)
 		return (perror(args[*i + 1]), 1);
 	if (dup2(fd_out, STDOUT_FILENO) == -1)
