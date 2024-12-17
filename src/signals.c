@@ -6,7 +6,7 @@
 /*   By: vberdugo <vberdugo@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:31:38 by vberdugo          #+#    #+#             */
-/*   Updated: 2024/12/09 11:59:14 by victor           ###   ########.fr       */
+/*   Updated: 2024/12/17 12:34:38 by vberdugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	signal_handler(int sig)
 	}
 }
 
+
 /* ************************************************************************** */
 /* Configures the terminal settings to disable echoing of control characters  */
 /* like ^C and ^\, ensuring a cleaner shell interface.                        */
@@ -50,7 +51,7 @@ void	configure_terminal(void)
 		perror("tcgetattr");
 		exit(EXIT_FAILURE);
 	}
-	term.c_lflag &= ~ECHOCTL;
+	//term.c_lflag &= ~ECHOCTL;
 	if (tcsetattr(STDIN_FILENO, TCSANOW, &term) == -1)
 	{
 		perror("tcsetattr");
