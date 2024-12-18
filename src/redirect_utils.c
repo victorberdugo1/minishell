@@ -6,7 +6,7 @@
 /*   By: victor <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 11:28:43 by victor            #+#    #+#             */
-/*   Updated: 2024/12/17 12:57:37 by vberdugo         ###   ########.fr       */
+/*   Updated: 2024/12/18 21:06:12 by victor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,27 +64,27 @@ int	handle_here_doc_input(int pipe_fd[2], char *delimiter)
 	free(line);
 	close(pipe_fd[1]);
 	exit(0);
-}*/
-int handle_here_doc_input(int pipe_fd[2], char *delimiter)
+	}*/
+int	handle_here_doc_input(int pipe_fd[2], char *delimiter)
 {
-    char *line;
+	char	*line;
 
-    while (1)
-    {
-        line = readline("> "); // readline se encarga de la línea y del cursor
-        if (!line)
-            break;
-        if (strcmp(line, delimiter) == 0)
-        {
-            free(line);
-            break;
-        }
-        write(pipe_fd[1], line, strlen(line));
-        write(pipe_fd[1], "\n", 1);
-        free(line);
-    }
-    close(pipe_fd[1]);
-    exit(0);
+	while (1)
+	{
+		line = readline("> ");
+		if (!line)
+			break ;
+		if (ft_strcmp(line, delimiter) == 0)
+		{
+			free(line);
+			break ;
+		}
+		write(pipe_fd[1], line, ft_strlen(line));
+		write(pipe_fd[1], "\n", 1);
+		free(line);
+	}
+	close(pipe_fd[1]);
+	exit(0);
 }
 
 /* ************************************************************************** */
