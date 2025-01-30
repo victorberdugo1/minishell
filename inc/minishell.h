@@ -6,7 +6,7 @@
 /*   By: victor <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 10:14:01 by victor            #+#    #+#             */
-/*   Updated: 2025/01/22 18:53:42 by victor           ###   ########.fr       */
+/*   Updated: 2025/01/30 18:00:26 by victor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINISHELL_H
@@ -86,8 +86,8 @@ char	*handle_multiline_input(char *initial_line);
 char	*expand_all_env_vars(char *input, int exit_status);
 /* built-ins */
 int		ft_is_builtin(char *cmd);
-void	ft_exec_builtin(char *cmd, int *exit_status);
-void	ft_execute_cd(int *exit_status);
+void    ft_exec_builtin(char **cmd, int *exit_status, char **env);
+void	ft_execute_cd(char **cmd, char **env);
 void	ft_execute_echo(int *exit_status);
 void	ft_execute_export(int *exit_status);
 void	ft_execute_unset(int *exit_status);
