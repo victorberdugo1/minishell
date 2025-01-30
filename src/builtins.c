@@ -6,7 +6,7 @@
 /*   By: victor <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:34:47 by victor            #+#    #+#             */
-/*   Updated: 2025/01/30 19:53:49 by victor           ###   ########.fr       */
+/*   Updated: 2025/01/30 20:17:37 by victor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,9 @@ void ft_execute_cd(char **av, char **env)
     int result;
     char buf[PATH_MAX];
     char *tmp;
-(void)env;
-    result = 0;
+	(void)env;
     
-    // Si no se especifica ruta, usar la variable de entorno HOME
+	result = 0;
     if (!av[1])
     {
         path = getenv("HOME");
@@ -79,27 +78,21 @@ void ft_execute_cd(char **av, char **env)
     {
         path = av[1];
     }
-
-    // Cambiar al directorio especificado
     if (chdir(path) != 0)
     {
         perror("cd");
         result = 1;
     }
-
-    // Si no hubo error, actualizar las variables de entorno PWD y OLDPWD
     if (!result)
     {
         tmp = getenv("PWD");
         if (tmp)
         {
-            setenv("OLDPWD", tmp, 1);  // Establece OLDPWD con el valor anterior
+            setenv("OLDPWD", tmp, 1);
         }
-
-        // Obtiene el directorio actual y lo establece como PWD
         if (getcwd(buf, sizeof(buf)) != NULL)
         {
-            setenv("PWD", buf, 1);  // Establece PWD con el nuevo directorio
+            setenv("PWD", buf, 1);
         }
-    }}
-
+    }
+}
