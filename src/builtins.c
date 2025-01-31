@@ -6,7 +6,7 @@
 /*   By: victor <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:34:47 by victor            #+#    #+#             */
-/*   Updated: 2025/01/30 20:17:37 by victor           ###   ########.fr       */
+/*   Updated: 2025/01/31 11:52:21 by victor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,33 +38,33 @@ void ft_exec_builtin(char **cmd, int *exit_status, char **env)
     if (ft_strcmp(cmd[0], "cd") == 0)
         ft_execute_cd(cmd, env);
     else if (ft_strcmp(cmd[0], "echo") == 0)
-        ft_execute_echo(exit_status);
+        ft_execute_echo(cmd, exit_status);
     else if (ft_strcmp(cmd[0], "export") == 0)
-        ft_execute_export(exit_status);
+        ft_execute_export(cmd, env);
     else if (ft_strcmp(cmd[0], "unset") == 0)
-        ft_execute_unset(exit_status);
+        ft_execute_unset(cmd, env);
     else if (ft_strcmp(cmd[0], "env") == 0)
-        ft_execute_env(exit_status);
+        ft_execute_env(env);
     else if (ft_strcmp(cmd[0], "pwd") == 0)
         ft_execute_pwd(exit_status);
 
-    // Liberar memoria de cmd después de la ejecución
     for (int i = 0; cmd[i] != NULL; i++)
     {
-        free(cmd[i]);  // Liberar cada string individualmente
+        free(cmd[i]); 
     }
-    free(cmd);  // Liberar el array de punteros
+    free(cmd); 
 }
 
 void ft_execute_cd(char **av, char **env)
 {
-   char *path;
+    static char oldpwd[PATH_MAX] = "";
+    char *path;
     int result;
     char buf[PATH_MAX];
     char *tmp;
-	(void)env;
-    
-	result = 0;
+    (void)env;
+
+    result = 0;
     if (!av[1])
     {
         path = getenv("HOME");
@@ -74,10 +74,21 @@ void ft_execute_cd(char **av, char **env)
             return;
         }
     }
+    else if (strcmp(av[1], "-") == 0) // Si el usuario escribe "cd -"
+    {
+        if (oldpwd[0] == '\0') // Si oldpwd no está inicializado
+        {
+            printf("cd: OLDPWD not set\n");
+            return;
+        }
+        printf("%s\n", oldpwd); // Mostrar el directorio al que cambiamos
+        path = oldpwd;
+    }
     else
     {
         path = av[1];
     }
+
     if (chdir(path) != 0)
     {
         perror("cd");
@@ -88,7 +99,8 @@ void ft_execute_cd(char **av, char **env)
         tmp = getenv("PWD");
         if (tmp)
         {
-            setenv("OLDPWD", tmp, 1);
+            strncpy(oldpwd, tmp, PATH_MAX - 1); // Guardar PWD en oldpwd
+            oldpwd[PATH_MAX - 1] = '\0'; // Asegurar el null-terminator
         }
         if (getcwd(buf, sizeof(buf)) != NULL)
         {
@@ -96,3 +108,4 @@ void ft_execute_cd(char **av, char **env)
         }
     }
 }
+
