@@ -6,7 +6,7 @@
 /*   By: victor <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 11:07:13 by victor            #+#    #+#             */
-/*   Updated: 2025/02/05 17:30:59 by victor           ###   ########.fr       */
+/*   Updated: 2025/02/05 19:43:27 by victor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int	validate_and_extract(char *arg, char **key, char **value)
 		free(*value);
 		return (1);
 	}
+	remove_q(value);
 	return (0);
 }
 
