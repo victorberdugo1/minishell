@@ -6,17 +6,28 @@
 /*   By: victor <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 12:03:53 by victor            #+#    #+#             */
-/*   Updated: 2025/02/05 17:28:28 by victor           ###   ########.fr       */
+/*   Updated: 2025/02/06 13:00:50 by vberdugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/* ************************************************************************** */
+/* Executes the 'echo' command by calling `exe_echo` with the provided args.  */
+/* - Skips the first argument (cmd[0], which is "echo").                      */
+/* - Sets the exit status returned by `exe_echo`.                             */
+/* ************************************************************************** */
 void	ft_execute_echo(char **cmd, int *exit_status)
 {
 	*exit_status = exe_echo(cmd + 1);
 }
 
+/* ************************************************************************** */
+/* Executes the 'export' command:                                             */
+/* - If no arguments, prints all exported variables.                          */
+/* - Otherwise, assigns new variables using `assign_export_vars`.             */
+/* - Prints an error if the syntax is invalid.                                */
+/* ************************************************************************** */
 void	ft_execute_export(char **cmd, char **env)
 {
 	int	result;
@@ -33,6 +44,9 @@ void	ft_execute_export(char **cmd, char **env)
 	}
 }
 
+/* ************************************************************************** */
+/* ft_execute_env: Prints all environment variables.                          */
+/* ************************************************************************** */
 void	ft_execute_env(char **env)
 {
 	int	i;
@@ -46,6 +60,12 @@ void	ft_execute_env(char **env)
 	return ;
 }
 
+/* ************************************************************************** */
+/* Executes the 'pwd' command: prints the current working directory.          */
+/* - Uses `getcwd` to retrieve the current directory.                         */
+/* - Prints the directory to stdout or an error message if it fails.          */
+/* - Sets the exit status to 0 on success, or 1 on failure.                   */
+/* ************************************************************************** */
 void	ft_execute_pwd(int *exit_status)
 {
 	char	cwd[1024];
@@ -63,6 +83,12 @@ void	ft_execute_pwd(int *exit_status)
 	}
 }
 
+/* ************************************************************************** */
+/* ft_execute_unset: Removes specified environment variables.                 */
+/* If no arguments are provided, prints an error and returns 1.               */
+/* Otherwise, for each argument, searches for a matching key in env, frees    */
+/* its memory, and removes the variable.                                      */
+/* ************************************************************************** */
 int	ft_execute_unset(char **av, char **env)
 {
 	int		i;

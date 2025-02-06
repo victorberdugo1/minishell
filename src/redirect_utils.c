@@ -6,7 +6,7 @@
 /*   By: victor <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 11:28:43 by victor            #+#    #+#             */
-/*   Updated: 2025/01/22 20:15:44 by victor           ###   ########.fr       */
+/*   Updated: 2025/02/06 13:47:41 by vberdugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,41 +142,7 @@ int	handle_heredoc_in(int pipe_fd[2], char *cmd, char *delimit, char **env)
 /* process. The child process reads input from the user until the delimiter   */
 /* is encountered and writes the input to the pipe. The parent process waits  */
 /* for the child to finish and then redirects the input stream to the pipe.   */
-/* ************************************************************************** *
-int	handle_here_doc_redirect(char **args, int exit, int *i, char **env)
-{
-	char	*delimite;
-	int		pipe_fd[2];
-	pid_t	pid;
-	char	*command_path;
-
-	command_path = find_command_in_path(args[0], env);
-	if (!command_path)
-		return (handle_heredoc_in(pipe_fd, args[*i - 1], args[*i + 1], env), 1);
-	free(command_path);
-	delimite = args[*i + 1];
-	if (pipe(pipe_fd) == -1)
-		return (perror("pipe"), free(delimite), 1);
-	pid = fork();
-	if (pid == 0)
-	{
-		close(pipe_fd[0]);
-		handle_heredoc_in(pipe_fd, args[*i - 1], delimite, env);
-		free(delimite);
-	}
-	else if (pid > 0)
-	{
-		close(pipe_fd[1]);
-		if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
-			return (perror("dup2"), close(pipe_fd[0]), free(delimite), 1);
-		close(pipe_fd[0]);
-		waitpid(pid, NULL, 0);
-	}
-	else
-		return (perror("fork"), free(delimite), 1);
-	return (free(delimite), args[*i] = NULL, args[*i + 1] = NULL, (*i)++, exit);
-}*/
-
+/* ************************************************************************** */
 int	handle_here_doc_redirect(char **args, int exit, int *i, char **env)
 {
 	char	*delimite;

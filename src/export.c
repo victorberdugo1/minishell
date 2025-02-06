@@ -6,88 +6,17 @@
 /*   By: victor <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 11:07:13 by victor            #+#    #+#             */
-/*   Updated: 2025/02/05 19:43:27 by victor           ###   ########.fr       */
+/*   Updated: 2025/02/06 13:38:13 by vberdugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*int	assign_single_var(char *arg, char **env)
-{
-	char	*pair[2];
-	char	*equal_sign;
-	int		i;
-
-	i = 0;
-	if (!check_key(arg))
-		return (1);
-	equal_sign = ft_strchr(arg, '=');
-	if (!equal_sign) 
-		return (0);
-
-	char	*key;
-	char	*value;
-	key = ft_substr(arg, 0, equal_sign - arg);
-	value = ft_strdup(equal_sign + 1);
-	if (!key || !value)
-	{
-		free(key);
-		free(value);
-		return (1);
-	}
-	setenv(key, value, 1);
-		free(key);
-		free(value);
-
-	if (equal_sign)
-	{
-		pair[0] = ft_substr(arg, 0, equal_sign - arg);
-		pair[1] = ft_strdup(equal_sign + 1);
-		if (!pair[0] || !pair[1])
-		{
-			free(pair[0]);
-			free(pair[1]);
-			return (1);
-		}
-		while (env[i])
-		{
-			if (!ft_strncmp(env[i], pair[0], ft_strlen(pair[0]))
-				&& env[i][ft_strlen(pair[0])] == '=')
-			{
-				char *new_value = ft_strjoin(pair[0], "=");
-				char *temp = ft_strjoin(new_value, pair[1]);
-				free(new_value);
-				if (env[i] && env[i] != arg)
-					free(env[i]);
-				env[i] = temp;
-				free(pair[0]);
-				free(pair[1]);
-				return (0);
-			}
-			i++;
-		}
-		env[i] = ft_strjoin(pair[0], "=");
-		char *new_value = ft_strjoin(env[i], pair[1]);
-		free(env[i]);
-		env[i] = new_value;
-		env[i + 1] = NULL;
-		free(pair[0]);
-		free(pair[1]);
-	}
-	else
-	{
-		while (env[i])
-		{
-			if (ft_strcmp(env[i], arg) == 0)
-				return (0);
-			i++;
-		}
-		env[i] = ft_strdup(arg);
-		env[i + 1] = NULL;
-	}
-	return (0);
-}*/
-
+/* ************************************************************************** */
+/* Validates and extracts the key and value from a string.                    */
+/* If the string contains '=', splits it into key and value.                  */
+/* Removes quotes from the value if present. Returns 1 failure, 0 success.    */
+/* ************************************************************************** */
 int	validate_and_extract(char *arg, char **key, char **value)
 {
 	char	*equal_sign;
@@ -107,6 +36,11 @@ int	validate_and_extract(char *arg, char **key, char **value)
 	return (0);
 }
 
+/* ************************************************************************** */
+/* update_existing_var: Updates the value of an existing environment variable */
+/* If the key is found, it replaces its value with the new one.               */
+/* Returns 1 if the variable was updated, 0 if not found.                     */
+/* ************************************************************************** */
 int	update_existing_var(char **env, char *key, char *value)
 {
 	int		i;
@@ -132,6 +66,10 @@ int	update_existing_var(char **env, char *key, char *value)
 	return (0);
 }
 
+/* ************************************************************************** */
+/* add_new_var: Adds a new environment variable to the env array.             */
+/* If the key doesn't exist, it creates a new entry with the key and value.   */
+/* ************************************************************************** */
 void	add_new_var(char **env, char *key, char *value)
 {
 	int		i;
@@ -147,6 +85,11 @@ void	add_new_var(char **env, char *key, char *value)
 	env[i + 1] = NULL;
 }
 
+/* ************************************************************************** */
+/* assign_single_var: Assigns a value to a single environment variable.       */
+/* If the key already exists, it updates the value. If not, it adds a new one.*/
+/* Validates the key and extracts the key-value pair. Frees allocated memory. */
+/* ************************************************************************** */
 int	assign_single_var(char *arg, char **env)
 {
 	char	*key;
@@ -168,7 +111,11 @@ int	assign_single_var(char *arg, char **env)
 	return (0);
 }
 
-// Asigna las variables exportadas
+/* ************************************************************************** */
+/* Assigns variables from the export command to the env array.                */
+/* Iterates through the arguments and uses assign_single_var handle each one  */
+/* Returns 1 if any assignment fails, otherwise returns 0.                    */
+/* ************************************************************************** */
 int	assign_export_vars(char **av, char **env)
 {
 	int	i;

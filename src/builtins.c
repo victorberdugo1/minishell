@@ -6,7 +6,7 @@
 /*   By: victor <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:34:47 by victor            #+#    #+#             */
-/*   Updated: 2025/02/05 17:17:44 by victor           ###   ########.fr       */
+/*   Updated: 2025/02/06 12:29:06 by vberdugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,13 @@ void	ft_exec_builtin(char **cmd, int *exit_status, char **env)
 	free(cmd);
 }
 
+/* ************************************************************************** */
+/* Determines the target path for 'cd' based on arguments.                    */
+/* - No argument: Returns HOME (or NULL if unset).                            */
+/* - Argument "-": Returns OLDPWD (or NULL if unset).                         */
+/* - Otherwise: Returns the provided argument.                                */
+/* Returns: Target path if found, NULL on error.                              */
+/* ************************************************************************** */
 static char	*get_target_path(char **av, char *oldpwd)
 {
 	char	*home;
@@ -84,6 +91,11 @@ static char	*get_target_path(char **av, char *oldpwd)
 	return (av[1]);
 }
 
+/* ************************************************************************** */
+/* Updates environment variables for directory changes.                       */
+/* - Saves the current PWD into `oldpwd`.                                     */
+/* - Updates PWD to the current working directory.                            */
+/* ************************************************************************** */
 static void	update_directories(char *oldpwd)
 {
 	char	buf[PATH_MAX];
@@ -101,6 +113,12 @@ static void	update_directories(char *oldpwd)
 	}
 }
 
+/* ************************************************************************** */
+/* Executes the 'cd' command: changes the current working directory.          */
+/* - Gets the target path using `get_target_path`.                            */
+/* - Changes directory with `chdir`. On error, prints a message and returns.  */
+/* - Updates PWD and OLDPWD environment variables using `update_directories`. */
+/* ************************************************************************** */
 void	ft_execute_cd(char **av)
 {
 	static char	oldpwd[PATH_MAX] = "";

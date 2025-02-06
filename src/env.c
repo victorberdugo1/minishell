@@ -6,12 +6,17 @@
 /*   By: victor <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 11:46:45 by victor            #+#    #+#             */
-/*   Updated: 2025/02/05 17:28:16 by victor           ###   ########.fr       */
+/*   Updated: 2025/02/06 13:31:10 by vberdugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/* ************************************************************************** */
+/* get_env_arr: Duplicates the environment variable array.                    */
+/* Allocates and copies env into a new array, returning a dynamically         */
+/* allocated copy. If fails, frees allocated memory and returns NULL.         */
+/* ************************************************************************** */
 char	**get_env_arr(char **env)
 {
 	int		i;
@@ -41,7 +46,9 @@ char	**get_env_arr(char **env)
 	return (raw_env[i] = NULL, raw_env);
 }
 
-// Función para imprimir las variables exportadas
+/* ************************************************************************** */
+/* print_exported_vars: Prints environment variables in 'declare -x' format.  */
+/* ************************************************************************** */
 int	print_exported_vars(char **env)
 {
 	int	i;
@@ -55,7 +62,13 @@ int	print_exported_vars(char **env)
 	return (0);
 }
 
-// Comprobamos que la clave sea válida para una variable de entorno
+/* ************************************************************************** */
+/* check_key: Validates if arg is a valid environment variable name.          */
+/* - Must start with a letter or '_'.                                         */
+/* - Can only contain letters, digits, or '_'.                                */
+/* - '=' is allowed but must appear at the end or separate key from value.    */
+/* - Prints an error message if invalid.                                      */
+/* ************************************************************************** */
 bool	check_key(char *arg)
 {
 	int	i;
@@ -82,6 +95,10 @@ bool	check_key(char *arg)
 	return (true);
 }
 
+/* ************************************************************************** */
+/* remove_env_variable: Removes an environment variable from the env array.   */
+/* Shifts all elements after the given index one position to the left.        */
+/* ************************************************************************** */
 void	remove_env_variable(int index, char **env)
 {
 	while (env[index])
