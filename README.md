@@ -1,5 +1,8 @@
 # <p align="center"><strong>Minishell</strong></p>
 
+<p align="center">
+  <img src="shell_0.jpeg" alt="minishell" style="width:40%; margin:auto;" />
+</p>
 
 | Category            | Details                                                                 |
 |---------------------|-------------------------------------------------------------------------|
