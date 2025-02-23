@@ -1,10 +1,73 @@
-# <p align="center"><strong>Minishell Eval</strong></p>
+# <p align="center"><strong>Minishell</strong></p>
 
+
+| Category            | Details                                                                 |
+|---------------------|-------------------------------------------------------------------------|
+| Program Name        | minishell                                                              |
+| Files to Submit     | Makefile, *.h, *.c                                                     |
+| Makefile Rules      | NAME, all, clean, fclean, re                                            |
+| Compiler Flags      | -Wall -Wextra -Werror                                                   |
+| Allowed Functions | readline, rl_clear_history, rl_on_new_line, rl_replace_line, rl_redisplay, add_history,<br>printf, malloc, free, write, access, open, read, close, fork, wait, waitpid,<br>wait3, wait4, signal, sigaction, kill, exit, getcwd, chdir, stat, lstat,<br>fstat, unlink, execve, dup, dup2, pipe, opendir, readdir, closedir,<br>strerror, perror, isatty, ttyname, ttyslot, ioctl, getenv, tcsetattr,<br>tcgetattr, tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs                                                                                                                                 |
+| Libft Allowed       | Yes                                                                    |
+| Description         | Write a shell                                               |
+
+# General Instructions
+• The project must be written in **C** following the Norm. Any norm violation will result in a score of 0.  
+• Robust memory management:  
+  - No leaks (except known leaks from readline)  
+  - No crashes (segfault, bus error, double free, etc.)  
+• **Required Makefile** with:  
+  - Rules: `$(NAME)`, `all`, `clean`, `fclean`, `re`  
+  - Compiler flags: `-Wall -Werror -Wextra`  
+  - No unnecessary relinking  
+• For bonus:  
+  - A separate `bonus` rule in the Makefile  
+  - Bonus code must be in files named `*_bonus.c`/`*_bonus.h`  
+• If using libft:  
+  - Include it in the `libft/` directory with its own Makefile  
+  - Compile libft first  
+• Submission must be via the assigned Git repository
+
+# Mandatory Part
+## Technical Description
+The minishell must implement:
+
+### Basic Features
+• An interactive prompt with history  
+• Searching for executables using PATH or via relative/absolute paths  
+• Handling a single global variable exclusively for signals
+
+### Command Processing
+• Quote handling:  
+  - `'...'` (no interpretation)  
+  - `"..."` (with expansion of `$`)  
+• Redirections:  
+  - `<`, `>`, `<<` (here-doc), `>>` (append)  
+• Pipes (`|`) between commands  
+• Environment variables:  
+  - Expansion of `$VAR` and `$?`  
+  - Builtins: `export`, `unset`, `env`, `echo`, `cd`, `pwd`, `exit`
+
+### Signals
+• Bash-like behavior for:  
+  - Ctrl+C (prints a new line with a fresh prompt)  
+  - Ctrl+D (exits the shell)  
+  - Ctrl+\ (no action)
+
+### Mandatory Builtins
+• `echo` with the `-n` option  
+• `cd`   
+• `pwd`  
+• `exit`  
+• `env`    
+• `export`  
+• `unset`  
 ### Attachments
 
 Please download the attachments below:<br>
 [subject.pdf](./minishell.pdf)
 
+# <p align="center"><strong>Minishell Eval</strong></p>
 
 # __**MANDATORY PART**__
 
